@@ -4,6 +4,8 @@ import com.sy.myboardservice.domain.Post;
 import com.sy.myboardservice.exception.DataNotFoundException;
 import com.sy.myboardservice.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,10 +25,13 @@ public class PostService {
 
     public Post selectPost(Long id) {
         return postRepository.findById(id).orElseThrow(DataNotFoundException::new);
-
     }
 
     public void deletePost(Long id) {
         postRepository.deleteById(id);
+    }
+
+    public Page<Post> selectPostList(Pageable pageable) {
+        return postRepository.findAll(pageable);
     }
 }
