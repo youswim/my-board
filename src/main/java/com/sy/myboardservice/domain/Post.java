@@ -2,18 +2,16 @@ package com.sy.myboardservice.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Post {
+public class Post extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,16 +28,4 @@ public class Post {
 
     @Column
     Long likes;
-
-    @Column
-    LocalDateTime rgstDtm;
-
-    @Column(length = 20)
-    String rgsrId;
-
-    @Column(length = 20)
-    LocalDateTime updDtm;
-
-    @Column
-    String updrId;
 }
