@@ -18,20 +18,20 @@ public class PostService {
         postRepository.save(post);
     }
 
+    public Post selectPost(Long id) {
+        return postRepository.findById(id).orElseThrow(DataNotFoundException::new);
+    }
+
+    public Page<Post> selectPostList(Pageable pageable) {
+        return postRepository.findAll(pageable);
+    }
+
     public void updatePost(Post post) {
         postRepository.findById(post.getId()).orElseThrow(DataNotFoundException::new);
         postRepository.save(post);
     }
 
-    public Post selectPost(Long id) {
-        return postRepository.findById(id).orElseThrow(DataNotFoundException::new);
-    }
-
     public void deletePost(Long id) {
         postRepository.deleteById(id);
-    }
-
-    public Page<Post> selectPostList(Pageable pageable) {
-        return postRepository.findAll(pageable);
     }
 }
