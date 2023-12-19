@@ -4,6 +4,10 @@ import com.sy.myboardservice.domain.Post;
 import com.sy.myboardservice.dto.PostDto;
 import com.sy.myboardservice.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +28,11 @@ public class PostController {
     @GetMapping("/{id}")
     public PostDto selectPost(@PathVariable Long id) {
         return PostDto.from(postService.selectPost(id));
+    }
+
+    @GetMapping("")
+    public Page<PostDto> selectAll(@PageableDefault(sort="id", direction= Sort.Direction.DESC) Pageable pageable) {
+        return postService.selectPostList(pageable).map(PostDto::from);
     }
 
     @PatchMapping("/{id}")
