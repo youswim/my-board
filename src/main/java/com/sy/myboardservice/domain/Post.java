@@ -28,4 +28,7 @@ public class Post extends BaseEntity{
 
     @Column
     Long likes;
+
+    @ManyToOne
+    private Member member;
 }
