@@ -1,13 +1,14 @@
 package com.sy.myboardservice.dto;
 
 import com.sy.myboardservice.domain.Post;
+import com.sy.myboardservice.utility.Util;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostDto {
@@ -18,12 +19,14 @@ public class PostDto {
 
     private String content;
 
+    private String rgstDtm;
+
+    private String updDtm;
+
     public Post toEntity() {
         return Post.builder()
-                .id(id)
                 .title(title)
                 .content(content)
-                .rgstDtm(LocalDateTime.now())
                 .build();
     }
 
@@ -32,11 +35,16 @@ public class PostDto {
                 .id(id)
                 .title(title)
                 .content(content)
-                .rgstDtm(LocalDateTime.now())
                 .build();
     }
 
     public static PostDto from(Post post) {
-        return new PostDto(post.getId(), post.getTitle(), post.getContent());
+        return PostDto.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .rgstDtm(post.getRgstDtm() == null ? null : Util.TimeFormat.reformatLocalDateTime(post.getRgstDtm()))
+                .updDtm(post.getUpdDtm() == null ? null : Util.TimeFormat.reformatLocalDateTime(post.getUpdDtm()))
+                .build();
     }
 }
