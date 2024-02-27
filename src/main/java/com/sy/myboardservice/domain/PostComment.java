@@ -1,5 +1,6 @@
 package com.sy.myboardservice.domain;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,27 +14,25 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Post extends BaseEntity{
+public class PostComment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-
-    @Column(length = 100)
-    String title;
+    private Long id;
 
     @Column(columnDefinition = "TEXT")
-    String content;
+    private String comment;
 
     @Column
-    Long views;
-
-    @Column
-    Long likes;
+    private Long likes;
 
     @ManyToOne
-    private Member member;
+    private Post post;
 
-    @OneToMany(mappedBy = "post")
-    private List<PostComment> postComments;
+    @ManyToOne
+    private PostComment parentComment;
+
+    @OneToMany(mappedBy = "parentComment")
+    private List<PostComment> childComments;
+
 }
